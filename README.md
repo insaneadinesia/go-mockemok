@@ -1,0 +1,2 @@
+# Go Mockemok
+Go Mockemok is a simple tool base on golang to make a mock of your API. You can set your mock status, request path and response. All you need is change the config.yaml file base on what you needed 🍻
