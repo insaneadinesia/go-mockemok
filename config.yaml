@@ -35,12 +35,44 @@ mock:
         status: 200
         type: "json"
         body: '{"status":"00","message":"test get success","data":{}}'
+        override_body:
+          - condition:
+              payload_from: "path_param"
+              payload_key: "id"
+              payload_value: "1"
+            status: 200
+            type: "json"
+            body: '{"status":"00","message":"test get success","data":{"id":1}}'
+
+          - condition:
+              payload_from: "query_param"
+              payload_key: "username"
+              payload_value: "insaneadinesia"
+            status: 200
+            type: "json"
+            body: '{"status":"00","message":"test get success","data":{"username":"insaneadinesia"}}'
     
       - path: "/test"
         method: "POST"
         status: 200
         type: "json"
         body: '{"status":"00","message":"test post success","data":{}}'
+        override_body:
+          - condition:
+              payload_from: "body"
+              payload_key: "command_id"
+              payload_value: "test-command-1"
+            status: 200
+            type: "json"
+            body: '{"status":"00","message":"test post success","data":{"command-id":"test-command-1"}}'
+
+          - condition:
+              payload_from: "body"
+              payload_key: "command_id"
+              payload_value: "test-command-2"
+            status: 200
+            type: "json"
+            body: '{"status":"00","message":"test post success","data":{"command-id":"test-command-2"}}'
     
       - path: "/test/:id"
         method: "PUT"

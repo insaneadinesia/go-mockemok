@@ -21,19 +21,19 @@ func main() {
 
 			switch request.Method {
 			case "GET":
-				group.GET(request.Path, handler.Get)
+				group.GET(request.Path, handler.RequestHandler)
 				break
 			case "POST":
-				group.POST(request.Path, handler.Post)
+				group.POST(request.Path, handler.RequestHandler)
 				break
 			case "PUT":
-				group.PUT(request.Path, handler.Put)
+				group.PUT(request.Path, handler.RequestHandler)
 				break
 			case "PATCH":
-				group.PATCH(request.Path, handler.Patch)
+				group.PATCH(request.Path, handler.RequestHandler)
 				break
 			case "DELETE":
-				group.DELETE(request.Path, handler.Delete)
+				group.DELETE(request.Path, handler.RequestHandler)
 				break
 			}
 		}

@@ -19,11 +19,25 @@ type Mock struct {
 }
 
 type MockGroupRequest struct {
-	Path   string `mapstructure:"path"`
-	Method string `mapstructure:"method"`
-	Status int    `mapstructure:"status"`
-	Type   string `mapstructure:"type"`
-	Body   string `mapstructure:"body"`
+	Path         string         `mapstructure:"path"`
+	Method       string         `mapstructure:"method"`
+	Status       int            `mapstructure:"status"`
+	Type         string         `mapstructure:"type"`
+	Body         string         `mapstructure:"body"`
+	OverrideBody []OverrideBody `mapstructure:"override_body,omitempty"`
+}
+
+type OverrideBody struct {
+	Condition OverrideCondition `mapstructure:"condition"`
+	Status    int               `mapstructure:"status"`
+	Type      string            `mapstructure:"type"`
+	Body      string            `mapstructure:"body"`
+}
+
+type OverrideCondition struct {
+	PayloadFrom  string      `mapstructure:"payload_from"`
+	PayloadKey   string      `mapstructure:"payload_key"`
+	PayloadValue interface{} `mapstructure:"payload_value"`
 }
 
 func Load() *AppConfig {
