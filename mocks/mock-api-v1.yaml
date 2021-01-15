@@ -1,0 +1,25 @@
+group: "/api/1.0"
+request:
+  - path: "/test/:id"
+    method: "GET"
+    status: 200
+    type: "json"
+    body: '{"status":"00","message":"test get success","data":{}}'
+
+  - path: "/test"
+    method: "POST"
+    status: 200
+    type: "json"
+    body: '{"status":"00","message":"test post success","data":{}}'
+
+  - path: "/test/:id"
+    method: "PUT"
+    status: 200
+    type: "json"
+    body: '{"status":"00","message":"test put success","data":{}}'
+        
+  - path: "/test/:id"
+    method: "DELETE"
+    status: 200
+    type: "json"
+    body: '{"status":"00","message":"test delete success","data":{}}'

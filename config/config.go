@@ -2,6 +2,8 @@ package config
 
 import (
 	"fmt"
+	"io/ioutil"
+	"path/filepath"
 
 	"github.com/spf13/viper"
 )
@@ -41,13 +43,12 @@ type OverrideCondition struct {
 }
 
 func Load() *AppConfig {
-	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath(".")
 
-	if err := viper.ReadInConfig(); err != nil {
-		panic(err)
-	}
+	// Load default config
+	viper.AddConfigPath(".")
+	viper.SetConfigName("config")
+	viper.ReadInConfig()
 
 	appConfig := AppConfig{}
 	err := viper.Unmarshal(&appConfig)
@@ -55,7 +56,30 @@ func Load() *AppConfig {
 		panic(err)
 	}
 
-	fmt.Println("Name : ", appConfig.Name)
+	files, err := ioutil.ReadDir("./mocks")
+	if err != nil {
+		panic(err)
+	}
+
+	// Load mocking rules
+	viper.AddConfigPath("./mocks")
+	for _, file := range files {
+		fileName := file.Name()
+		fileName = fileName[:len(fileName)-len(filepath.Ext(fileName))]
+
+		viper.SetConfigName(fileName)
+		viper.ReadInConfig()
+
+		mock := Mock{}
+		err := viper.Unmarshal(&mock)
+		if err != nil {
+			panic(err)
+		}
+
+		appConfig.Mock = append(appConfig.Mock, mock)
+	}
+
+	fmt.Println(fmt.Sprintf("\n%s mocks file loaded!", appConfig.Name))
 
 	return &appConfig
 }
